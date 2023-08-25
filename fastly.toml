@@ -1,0 +1,37 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["jchampion@fastly.com"]
+description = ""
+language = "javascript"
+manifest_version = 3
+name = "storyblok"
+service_id = ""
+
+[scripts]
+build = "npm run build"
+post_init = "npm install"
+
+
+[local_server]
+  [local_server.backends]
+    [local_server.backends.storyblok]
+      override_host = "api.storyblok.com"
+      url = "https://api.storyblok.com"
+  [local_server.config_stores]
+    [local_server.config_stores."config"]
+      format = "inline-toml"
+      [local_server.config_stores."config".contents]
+        "log" = "1" # 0 will disable logging, 1 will enable logging
+
+[setup]
+  [setup.backends]
+    [setup.backends.storyblok]
+      address = "api.storyblok.com"
+      port = 443
+  [setup.config_stores]
+    [setup.config_stores.config]
+      description = "Configuration data for my service"
+      [setup.config_stores.config.items]
+        [setup.config_stores.config.items.log]
+          value = "0" # 0 will disable logging, 1 will enable logging
